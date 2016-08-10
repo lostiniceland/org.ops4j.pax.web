@@ -124,9 +124,8 @@ public class WebAppParser {
 			}
 		}
 
-		// Look for attached web-fragements
-		List<URL> webFragments = null;
-		webFragments = scanWebFragments(bundle, webApp);
+		// Look for attached web-fragments
+		List<URL> webFragments = scanWebFragments(bundle, webApp);
 
 		webApp.setWebXmlURL(webXmlURL);
 		webApp.setJettyWebXmlURL(jettyWebXmlURL);
@@ -239,14 +238,11 @@ public class WebAppParser {
 		List<URL> facesConfigs = new ArrayList<>();
 
 		for (URL u : ClassPathUtil.findResources(bundlesInClassSpace, "/", "*.tld", true)) {
-			InputStream is = u.openStream();
-			try {
+			try (InputStream is = u.openStream()) {
 				Element rootTld = getRootElement(is);
 				if (rootTld != null) {
 					parseListeners(rootTld, webApp);
 				}
-			} finally {
-				is.close();
 			}
 		}
 
@@ -365,13 +361,6 @@ public class WebAppParser {
 			}
 			webApp.addServletContainerInitializer(webAppServletContainerInitializer);
 		}
-
-		if (containerInitializers != null) {
-			LOG.debug("found container initializers by SafeServiceLoader ... skip the old impl. ");
-			return; // everything done, in case this didn't work we'll keep on
-			// going with the backup.
-		}
-
 	}
 
 	private static void parseSecurityRole(SecurityRoleType securityRoleType, WebApp webApp) {
@@ -462,8 +451,8 @@ public class WebAppParser {
 	/**
 	 * Parses context params out of web.xml.
 	 *
-	 * @param rootElement web.xml root element
-	 * @param webApp      web app for web.xml
+	 * @param contextParam contextParam element from web.xml
+	 * @param webApp       model for web.xml
 	 */
 	private static void parseContextParams(final ParamValueType contextParam, final WebApp webApp) {
 		final WebAppInitParam initParam = new WebAppInitParam();
@@ -475,8 +464,8 @@ public class WebAppParser {
 	/**
 	 * Parses session config out of web.xml.
 	 *
-	 * @param rootElement web.xml root element
-	 * @param webApp      web app for web.xml
+	 * @param sessionConfigType session-configType element from web.xml
+	 * @param webApp            model for web.xml
 	 */
 	private static void parseSessionConfig(final SessionConfigType sessionConfigType, final WebApp webApp) {
 		// Fix for PAXWEB-201
@@ -506,8 +495,8 @@ public class WebAppParser {
 	/**
 	 * Parses servlets and servlet mappings out of web.xml.
 	 *
-	 * @param rootElement web.xml root element
-	 * @param webApp      web app for web.xml
+	 * @param servletType servletType element from web.xml
+	 * @param webApp      model for web.xml
 	 */
 	private static void parseServlets(final ServletType servletType, final WebApp webApp) {
 		final WebAppServlet servlet = new WebAppServlet();
@@ -551,8 +540,7 @@ public class WebAppParser {
 	}
 
 	private static void parseServletMappings(ServletMappingType servletMappingType, WebApp webApp) {
-		// starting with servlet 2.5 url-patern can be specified more
-		// times
+		// starting with servlet 2.5 url-pattern can be specified more times
 		// for the earlier version only one entry will be returned
 		final String servletName = servletMappingType.getServletName().getValue();
 		List<UrlPatternType> urlPattern = servletMappingType.getUrlPattern();
@@ -567,8 +555,8 @@ public class WebAppParser {
 	/**
 	 * Parses filters and filter mappings out of web.xml.
 	 *
-	 * @param rootElement web.xml root element
-	 * @param webApp      web app for web.xml
+	 * @param filterType filterType element from web.xml
+	 * @param webApp     model for web.xml
 	 */
 	private static void parseFilters(final FilterType filterType, final WebApp webApp) {
 		final WebAppFilter filter = new WebAppFilter();
@@ -636,8 +624,8 @@ public class WebAppParser {
 	/**
 	 * Parses listsners out of web.xml.
 	 *
-	 * @param rootElement web.xml root element
-	 * @param webApp      web app for web.xml
+	 * @param listenerType listenerType element from web.xml
+	 * @param webApp       model for web.xml
 	 */
 	private static void parseListeners(final ListenerType listenerType, final WebApp webApp) {
 		addWebListener(webApp, listenerType.getListenerClass().getValue());
@@ -652,19 +640,15 @@ public class WebAppParser {
 	private static void parseListeners(final Element rootElement,
 									   final WebApp webApp) {
 		final Element[] elements = getChildren(rootElement, "listener");
-		if (elements != null && elements.length > 0) {
-			for (Element element : elements) {
-				addWebListener(webApp,
-						getTextContent(getChild(element, "listener-class")));
-			}
-		}
+		Arrays.stream(elements).forEach(element ->
+				addWebListener(webApp, getTextContent(getChild(element, "listener-class"))));
 	}
 
 	/**
 	 * Parses error pages out of web.xml.
 	 *
-	 * @param rootElement web.xml root element
-	 * @param webApp      web app for web.xml
+	 * @param errorPageType errorPageType element from web.xml
+	 * @param webApp        model for web.xml
 	 */
 	private static void parseErrorPages(final ErrorPageType errorPageType, final WebApp webApp) {
 		final WebAppErrorPage errorPage = new WebAppErrorPage();
@@ -686,23 +670,21 @@ public class WebAppParser {
 	/**
 	 * Parses welcome files out of web.xml.
 	 *
-	 * @param rootElement web.xml root element
-	 * @param webApp      web app for web.xml
+	 * @param welcomeFileList welcomeFileList element from web.xml
+	 * @param webApp     	  model for web.xml
 	 */
 	private static void parseWelcomeFiles(final WelcomeFileListType welcomeFileList, final WebApp webApp) {
 		if (welcomeFileList != null && welcomeFileList.getWelcomeFile() != null
 				&& !welcomeFileList.getWelcomeFile().isEmpty()) {
-			for (String element : welcomeFileList.getWelcomeFile()) {
-				webApp.addWelcomeFile(element);
-			}
+			welcomeFileList.getWelcomeFile().forEach(webApp::addWelcomeFile);
 		}
 	}
 
 	/**
 	 * Parses mime mappings out of web.xml.
 	 *
-	 * @param rootElement web.xml root element
-	 * @param webApp      web app for web.xml
+	 * @param mimeMappingType mimeMappingType element from web.xml
+	 * @param webApp     	  model for web.xml
 	 */
 	private static void parseMimeMappings(final MimeMappingType mimeMappingType, final WebApp webApp) {
 		final WebAppMimeMapping mimeMapping = new WebAppMimeMapping();
@@ -767,7 +749,7 @@ public class WebAppParser {
 	/**
 	 * Returns the text content of an element or null if the element is null.
 	 *
-	 * @param element the som elemet form which the contet should be retrieved
+	 * @param element the same element form which the context should be retrieved
 	 * @return text content of element
 	 */
 	private static String getTextContent(final Element element) {
