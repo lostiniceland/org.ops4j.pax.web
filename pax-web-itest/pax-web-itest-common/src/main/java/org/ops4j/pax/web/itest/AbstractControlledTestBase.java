@@ -358,6 +358,8 @@ public abstract class AbstractControlledTestBase {
 						.versionAsInProject().startLevel(START_LEVEL_TEST_BUNDLE - 1),
 				mavenBundle("jakarta.websocket", "jakarta.websocket-client-api")
 						.versionAsInProject().startLevel(START_LEVEL_TEST_BUNDLE - 1),
+				mavenBundle().groupId("org.eclipse.jetty.compression")
+						.artifactId("jetty-compression-common").versionAsInProject(),
 				mavenBundle().groupId("org.eclipse.jetty")
 						.artifactId("jetty-client").versionAsInProject(),
 				mavenBundle().groupId("org.eclipse.jetty")
@@ -366,8 +368,8 @@ public abstract class AbstractControlledTestBase {
 						.artifactId("jetty-ee10-websocket-jakarta-common").versionAsInProject(),
 				mavenBundle().groupId("org.eclipse.jetty.ee10.websocket")
 						.artifactId("jetty-ee10-websocket-jakarta-client").versionAsInProject(),
-				mavenBundle().groupId("org.eclipse.jetty")
-						.artifactId("jetty-ee").versionAsInProject(),
+				mavenBundle().groupId("org.eclipse.jetty.ee")
+						.artifactId("jetty-ee-webapp").versionAsInProject(),
 				mavenBundle().groupId("org.eclipse.jetty.ee10")
 						.artifactId("jetty-ee10-webapp").versionAsInProject(),
 				mavenBundle().groupId("org.eclipse.jetty.ee10.websocket")
