@@ -52,7 +52,6 @@
 							org.osgi.util.tracker;version="[1.5,2)",
 
 							<!-- OSGi cmpn -->
-							org.ops4j.pax.web.service.http;version="${pax-web.osgi.version}",
 							org.osgi.service.servlet.context;version="[2,3)",
 							org.osgi.service.servlet.whiteboard;version="[2,3)",
 

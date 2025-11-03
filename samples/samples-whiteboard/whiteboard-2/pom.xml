@@ -52,12 +52,7 @@
 							org.osgi.util.tracker;version="[1.5,2)",
 
 							<!-- OSGi cmpn -->
-							org.ops4j.pax.web.service.http;version="${pax-web.osgi.version}",
 							org.osgi.service.servlet.context;version="[2,3)",
-
-							<!-- from pax-web -->
-							org.ops4j.pax.web.service.whiteboard,
-							org.ops4j.pax.web.extender.whiteboard.runtime,
 
 							<!-- from pax-logging-api -->
 							org.slf4j;version="[1.7,3)"
