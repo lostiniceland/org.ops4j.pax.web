@@ -23,6 +23,7 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.session.DefaultSessionIdManager;
 import org.eclipse.jetty.session.SessionManager;
 import org.ops4j.pax.web.service.spi.model.OsgiContextModel;
+import org.ops4j.pax.web.service.spi.servlet.OsgiHttpServletRequestWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,6 +50,17 @@ public class PaxWebSessionIdManager extends DefaultSessionIdManager {
 		}
 
 		return "";
+	}
+
+	@Override
+	public String getId(String extendedId) {
+		Boolean checkingValidity = OsgiHttpServletRequestWrapper.CHECKING_SESSION_VALIDITY.get();
+		if (checkingValidity == null || !checkingValidity) {
+			return super.getId(extendedId);
+		}
+		String id = super.getId(extendedId);
+		Request request = PaxWebSessionHandler.CURRENT_REQUEST.get();
+		return request != null ? id + getSessionIdSuffix(request) : id;
 	}
 
 	@Override

@@ -17,9 +17,14 @@ package org.ops4j.pax.web.service.jetty.internal;
 
 import org.eclipse.jetty.ee10.servlet.SessionHandler;
 import org.eclipse.jetty.http.HttpCookie;
+import org.eclipse.jetty.server.Request;
+import org.eclipse.jetty.server.Response;
 import org.eclipse.jetty.session.ManagedSession;
+import org.eclipse.jetty.util.Callback;
 
 public class PaxWebSessionHandler extends SessionHandler {
+
+	public static final ThreadLocal<Request> CURRENT_REQUEST = new ThreadLocal<>();
 
 	@Override
 	public HttpCookie getSessionCookie(ManagedSession session, boolean requestIsSecure) {
@@ -28,7 +33,28 @@ public class PaxWebSessionHandler extends SessionHandler {
 			String id = getExtendedId(cookie.getValue());
 			return HttpCookie.from(cookie.getName(), id, getSessionCookieAttributes());
 		}
-		return cookie;
+		return null;
+	}
+
+	@Override
+	public boolean handle(Request request, Response response, Callback callback) throws Exception {
+		try {
+			CURRENT_REQUEST.set(request);
+			return super.handle(request, response, callback);
+		} finally {
+			CURRENT_REQUEST.remove();
+		}
+	}
+
+	@Override
+	public ManagedSession getManagedSession(String extendedId) {
+		Request request = CURRENT_REQUEST.get();
+		if (request == null) {
+			return super.getManagedSession(extendedId);
+		}
+		String id = getSessionIdManager().getId(extendedId);
+		String ctxId = id + PaxWebSessionIdManager.getSessionIdSuffix(request);
+		return super.getManagedSession(getSessionIdManager().getExtendedId(ctxId, request));
 	}
 
 	@Override

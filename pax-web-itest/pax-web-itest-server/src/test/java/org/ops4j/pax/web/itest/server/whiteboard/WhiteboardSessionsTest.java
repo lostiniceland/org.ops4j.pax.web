@@ -565,7 +565,9 @@ public class WhiteboardSessionsTest extends MultiContainerTestSupport {
 					req.getSession().removeAttribute("v");
 					break;
 				case "get":
-					resp.getWriter().print("v=" + (req.getSession().getAttribute("v")));
+					if (req.isRequestedSessionIdValid()) {
+						resp.getWriter().print("v=" + (req.getSession().getAttribute("v")));
+					}
 					break;
 				default:
 					break;
