@@ -19,12 +19,23 @@ import org.eclipse.jetty.ee10.servlet.SessionHandler;
 import org.eclipse.jetty.http.HttpCookie;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.Response;
+import org.eclipse.jetty.server.Session;
 import org.eclipse.jetty.session.ManagedSession;
+import org.eclipse.jetty.session.SessionIdManager;
 import org.eclipse.jetty.util.Callback;
+import org.ops4j.pax.web.service.spi.servlet.OsgiHttpServletRequestWrapper;
 
 public class PaxWebSessionHandler extends SessionHandler {
 
 	public static final ThreadLocal<Request> CURRENT_REQUEST = new ThreadLocal<>();
+
+	@Override
+	public void setSessionIdManager(SessionIdManager sessionIdManager) {
+		super.setSessionIdManager(sessionIdManager);
+		if (sessionIdManager instanceof PaxWebSessionIdManager paxWebSessionIdManager) {
+			paxWebSessionIdManager.setSessionManager(this);
+		}
+	}
 
 	@Override
 	public HttpCookie getSessionCookie(ManagedSession session, boolean requestIsSecure) {
@@ -47,14 +58,50 @@ public class PaxWebSessionHandler extends SessionHandler {
 	}
 
 	@Override
+	protected RequestedSession resolveRequestedSessionId(Request request) {
+		try {
+			OsgiHttpServletRequestWrapper.CHECKING_SESSION_VALIDITY.set(true);
+			return super.resolveRequestedSessionId(request);
+		} finally {
+			OsgiHttpServletRequestWrapper.CHECKING_SESSION_VALIDITY.remove();
+		}
+	}
+
+	@Override
+	public String encodeURI(Request request, String uri, boolean cookiesInUse) {
+		String encoded = super.encodeURI(request, uri, cookiesInUse);
+		String prefix = getSessionIdPathParameterNamePrefix();
+		int loc = encoded == null ? -1 : encoded.indexOf(prefix);
+		Session session = request.getSession(false);
+		if (loc >= 0 && session != null) {
+			String osgiExtendedId = session.getExtendedId();
+			String suffix = PaxWebSessionIdManager.getSessionIdSuffix(request);
+			String extendedId = osgiExtendedId.replace(suffix, "");
+			return encoded.replace(osgiExtendedId, extendedId);
+		}
+		return encoded;
+	}
+
+	@Override
 	public ManagedSession getManagedSession(String extendedId) {
 		Request request = CURRENT_REQUEST.get();
 		if (request == null) {
 			return super.getManagedSession(extendedId);
 		}
 		String id = getSessionIdManager().getId(extendedId);
-		String ctxId = id + PaxWebSessionIdManager.getSessionIdSuffix(request);
-		return super.getManagedSession(getSessionIdManager().getExtendedId(ctxId, request));
+		String sessionIdSuffix = PaxWebSessionIdManager.getSessionIdSuffix(request);
+		String ctxId = id.endsWith(sessionIdSuffix) ? id : id + sessionIdSuffix;
+		Boolean checking = OsgiHttpServletRequestWrapper.CHECKING_SESSION_VALIDITY.get();
+		try {
+			OsgiHttpServletRequestWrapper.CHECKING_SESSION_VALIDITY.remove();
+			return super.getManagedSession(getSessionIdManager().getExtendedId(ctxId, request));
+		} finally {
+			if (checking == null) {
+				OsgiHttpServletRequestWrapper.CHECKING_SESSION_VALIDITY.remove();
+			} else {
+				OsgiHttpServletRequestWrapper.CHECKING_SESSION_VALIDITY.set(checking);
+			}
+		}
 	}
 
 	@Override

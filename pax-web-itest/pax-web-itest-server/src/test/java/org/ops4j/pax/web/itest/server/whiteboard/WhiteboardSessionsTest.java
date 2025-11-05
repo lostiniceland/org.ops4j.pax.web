@@ -274,7 +274,7 @@ public class WhiteboardSessionsTest extends MultiContainerTestSupport {
 
 		// session should be created now:
 		//  - from runtime perspective in context /c
-		//  - from whitebord perspective in helper c1 for /c
+		//  - from whiteboard perspective in helper c1 for /c
 		assertThat(sessions.size(), equalTo(1));
 		assertThat(store.getCookies().size(), equalTo(1));
 

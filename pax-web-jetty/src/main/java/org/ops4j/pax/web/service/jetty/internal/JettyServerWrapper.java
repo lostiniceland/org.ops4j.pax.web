@@ -787,6 +787,9 @@ class JettyServerWrapper implements BatchVisitor {
 
 			// session configuration - based on defaultSessionConfiguration, but may be later overriden in OsgiContext
 			SessionHandler sessions = sch.getSessionHandler();
+			Collection<SessionHandler> handlers = server.getContainedBeans(SessionHandler.class);
+			handlers.forEach(h -> server.removeBean(h));
+			server.addBean(sessions);
 			if (sessions != null) {
 				sessions.setSessionIdManager(this.sessionIdManager);
 				SessionConfiguration sc = configuration.session();

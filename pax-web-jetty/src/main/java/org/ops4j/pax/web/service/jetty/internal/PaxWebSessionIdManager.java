@@ -31,8 +31,14 @@ public class PaxWebSessionIdManager extends DefaultSessionIdManager {
 
 	public static final Logger LOG = LoggerFactory.getLogger(PaxWebSessionIdManager.class);
 
+	private PaxWebSessionHandler paxWebSessionHandler;
+
 	public PaxWebSessionIdManager(Server server) {
 		super(server);
+	}
+
+	public void setSessionManager(PaxWebSessionHandler paxWebSessionHandler) {
+		this.paxWebSessionHandler = paxWebSessionHandler;
 	}
 
 	public static String getSessionIdSuffix(Request r) {
