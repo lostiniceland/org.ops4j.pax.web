@@ -1693,7 +1693,7 @@ class JettyServerWrapper implements BatchVisitor {
 
 				if (eventListener instanceof ServletContextListener) {
 					// we have to proxy the listener, so its contextInitialized is called with
-					// such even where ServletContext is scoped to proper bundle
+					// such event where ServletContext is scoped to proper bundle
 					OsgiServletContext c = osgiServletContexts.get(context);
 					if (c != null) {
 						eventListener = OsgiScopedListener.proxyListener(c, servletContextHandler::getOsgiServletContext,

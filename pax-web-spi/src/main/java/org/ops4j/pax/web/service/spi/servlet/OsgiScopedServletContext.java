@@ -131,82 +131,135 @@ public class OsgiScopedServletContext implements ServletContext {
 
 	@Override
 	public FilterRegistration.Dynamic addFilter(String filterName, String className) {
-		return contextSupplier.get().addFilter(filterName, className);
+		if (contextSupplier != null) {
+			return contextSupplier.get().addFilter(filterName, className);
+		}
+		throw new UnsupportedOperationException("addFilter() is not supported.");
 	}
 
 	@Override
 	public FilterRegistration.Dynamic addFilter(String filterName, Filter filter) {
-		return contextSupplier.get().addFilter(filterName, filter);
+		if (contextSupplier != null) {
+			return contextSupplier.get().addFilter(filterName, filter);
+		}
+		throw new UnsupportedOperationException("addFilter() is not supported.");
 	}
 
 	@Override
 	public FilterRegistration.Dynamic addFilter(String filterName, Class<? extends Filter> filterClass) {
-		return contextSupplier.get().addFilter(filterName, filterClass);
+		if (contextSupplier != null) {
+			return contextSupplier.get().addFilter(filterName, filterClass);
+		}
+		throw new UnsupportedOperationException("addFilter() is not supported.");
 	}
 
 	@Override
 	public void addListener(String className) {
-		contextSupplier.get().addListener(className);
+		if (contextSupplier != null) {
+			contextSupplier.get().addListener(className);
+			return;
+		}
+		throw new UnsupportedOperationException("addListener() is not supported.");
 	}
 
 	@Override
 	public <T extends EventListener> void addListener(T t) {
-		contextSupplier.get().addListener(t);
+		if (contextSupplier != null) {
+			contextSupplier.get().addListener(t);
+			return;
+		}
+		throw new UnsupportedOperationException("addListener() is not supported.");
 	}
 
 	@Override
 	public void addListener(Class<? extends EventListener> listenerClass) {
-		contextSupplier.get().addListener(listenerClass);
+		if (contextSupplier != null) {
+			contextSupplier.get().addListener(listenerClass);
+			return;
+		}
+		throw new UnsupportedOperationException("addListener() is not supported.");
 	}
 
 	@Override
 	public ServletRegistration.Dynamic addServlet(String servletName, String className) {
-		return contextSupplier.get().addServlet(servletName, className);
+		if (contextSupplier != null) {
+			return contextSupplier.get().addServlet(servletName, className);
+		}
+		throw new UnsupportedOperationException("addServlet() is not supported.");
 	}
 
 	@Override
 	public ServletRegistration.Dynamic addServlet(String servletName, Servlet servlet) {
-		return contextSupplier.get().addServlet(servletName, servlet);
+		if (contextSupplier != null) {
+			return contextSupplier.get().addServlet(servletName, servlet);
+		}
+		throw new UnsupportedOperationException("addServlet() is not supported.");
 	}
 
 	@Override
 	public ServletRegistration.Dynamic addServlet(String servletName, Class<? extends Servlet> servletClass) {
-		return contextSupplier.get().addServlet(servletName, servletClass);
+		if (contextSupplier != null) {
+			return contextSupplier.get().addServlet(servletName, servletClass);
+		}
+		throw new UnsupportedOperationException("addServlet() is not supported.");
 	}
 
 	@Override
 	public <T extends Filter> T createFilter(Class<T> clazz) throws ServletException {
-		return contextSupplier.get().createFilter(clazz);
+		if (contextSupplier != null) {
+			return contextSupplier.get().createFilter(clazz);
+		}
+		throw new UnsupportedOperationException("createFilter() is not supported.");
 	}
 
 	@Override
 	public <T extends EventListener> T createListener(Class<T> clazz) throws ServletException {
-		return contextSupplier.get().createListener(clazz);
+		if (contextSupplier != null) {
+			return contextSupplier.get().createListener(clazz);
+		}
+		throw new UnsupportedOperationException("createListener() is not supported.");
 	}
 
 	@Override
 	public <T extends Servlet> T createServlet(Class<T> clazz) throws ServletException {
-		return contextSupplier.get().createServlet(clazz);
+		if (contextSupplier != null) {
+			return contextSupplier.get().createServlet(clazz);
+		}
+		throw new UnsupportedOperationException("createServlet() is not supported.");
 	}
 
 	@Override
 	public void declareRoles(String... roleNames) {
-		contextSupplier.get().declareRoles(roleNames);
+		if (contextSupplier != null) {
+			contextSupplier.get().declareRoles(roleNames);
+			return;
+		}
+		throw new UnsupportedOperationException("declareRoles() is not supported.");
 	}
 
 	@Override
 	public boolean setInitParameter(String name, String value) {
-		return contextSupplier.get().setInitParameter(name, value);
+		if (contextSupplier != null) {
+			return contextSupplier.get().setInitParameter(name, value);
+		}
+		throw new IllegalStateException("setInitParameter() is not supported.");
 	}
 
 	@Override
 	public void setSessionTrackingModes(Set<SessionTrackingMode> sessionTrackingModes) {
-		contextSupplier.get().setSessionTrackingModes(sessionTrackingModes);
+		if (contextSupplier != null) {
+			contextSupplier.get().setSessionTrackingModes(sessionTrackingModes);
+			return;
+		}
+		throw new IllegalStateException("setSessionTrackingModes() is not supported.");
 	}
 
 	@Override
 	public ServletRegistration.Dynamic addJspFile(String servletName, String jspFile) {
-		return contextSupplier.get().addJspFile(servletName, jspFile);
+		if (contextSupplier != null) {
+			return contextSupplier.get().addJspFile(servletName, jspFile);
+		}
+		throw new IllegalStateException("addJspFile() is not supported.");
 	}
 
 	// --- methods that are scoped to HttpContext/ServletContextHelper
