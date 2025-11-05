@@ -250,6 +250,8 @@ public class ConfigurationImpl extends PropertyStore implements Configuration {
 		private final String tcclType;
 		private final boolean whiteboardSynchronous;
 
+		private final boolean decodeAmbiguousURIs;
+
 		private ServerConfigurationImpl() {
 			// eager resolution of some important properties
 			resolveIntegerProperty(PaxWebConfig.PID_CFG_HTTP_PORT);
@@ -347,6 +349,9 @@ public class ConfigurationImpl extends PropertyStore implements Configuration {
 
 			Boolean sync = resolveBooleanProperty(PaxWebConfig.BUNDLE_CONTEXT_PROPERTY_WHITEBOARD_EXTENDER_SYNCHRONOUS);
 			whiteboardSynchronous = sync != null && sync;
+
+			Boolean decode = resolveBooleanProperty(PaxWebConfig.PID_CFG_DECODE_AMBIGUOUS_URIS);
+			decodeAmbiguousURIs = decode != null && decode;
 		}
 
 		@Override
@@ -457,6 +462,11 @@ public class ConfigurationImpl extends PropertyStore implements Configuration {
 		@Override
 		public boolean isWhiteboardSynchronous() {
 			return whiteboardSynchronous;
+		}
+
+		@Override
+		public boolean isDecodeAmbiguousURIs() {
+			return decodeAmbiguousURIs;
 		}
 	}
 

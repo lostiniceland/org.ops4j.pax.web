@@ -195,4 +195,11 @@ public interface ServerConfiguration {
 	 */
 	boolean isWhiteboardSynchronous();
 
+	/**
+	 * Jetty specific parameter for {@code org.eclipse.jetty.ee10.servlet.ServletHandler#setDecodeAmbiguousURIs(boolean)}.
+	 * Defaults to {@code false}
+	 * @return
+	 */
+	boolean isDecodeAmbiguousURIs();
+
 }
