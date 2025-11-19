@@ -23,7 +23,7 @@
 	<parent>
 		<groupId>org.ops4j.pax.web.samples</groupId>
 		<artifactId>samples-war</artifactId>
-		<version>11.1.0</version>
+		<version>11.1.1-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
@@ -55,9 +55,4 @@
 		<!-- This is the WAB itself, without war packaging, with a fragment and imports packages from container-bundle-1 - different packaging method -->
 		<module>the-wab-itself-jar2</module>
 	</modules>
-
-
-  <scm>
-    <tag>web-11.1.0</tag>
-  </scm>
 </project>

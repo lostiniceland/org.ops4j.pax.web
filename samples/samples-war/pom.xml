@@ -23,7 +23,7 @@
 	<parent>
 		<groupId>org.ops4j.pax.web</groupId>
 		<artifactId>samples</artifactId>
-		<version>11.1.0</version>
+		<version>11.1.1-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
@@ -66,9 +66,4 @@
 		<module>wab-and-filter</module>
 		<module>war-filters</module>
 	</modules>
-
-
-  <scm>
-    <tag>web-11.1.0</tag>
-  </scm>
 </project>

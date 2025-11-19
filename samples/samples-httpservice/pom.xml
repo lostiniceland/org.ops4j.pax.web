@@ -23,7 +23,7 @@
 	<parent>
 		<groupId>org.ops4j.pax.web</groupId>
 		<artifactId>samples</artifactId>
-		<version>11.1.0</version>
+		<version>11.1.1-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
@@ -44,9 +44,4 @@
 		<module>hs-2</module>
 		<module>hs-for-war-default</module>
 	</modules>
-
-
-  <scm>
-    <tag>web-11.1.0</tag>
-  </scm>
 </project>
