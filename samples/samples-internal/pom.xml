@@ -23,7 +23,7 @@
 	<parent>
 		<groupId>org.ops4j.pax.web</groupId>
 		<artifactId>samples</artifactId>
-		<version>11.1.0-SNAPSHOT</version>
+		<version>11.1.0</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
@@ -40,4 +40,8 @@
 		<module>initializers-fragment2</module>
 	</modules>
 
+
+  <scm>
+    <tag>web-11.1.0</tag>
+  </scm>
 </project>
