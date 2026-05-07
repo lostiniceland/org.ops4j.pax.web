@@ -234,9 +234,11 @@
 		<dependency.org.apache.geronimo.bundles.commons-discovery>0.4_1</dependency.org.apache.geronimo.bundles.commons-discovery>
 
 		<dependency.org.apache.httpcomponents.client4>4.5.14</dependency.org.apache.httpcomponents.client4>
-		<dependency.org.apache.httpcomponents.client5>5.6.1</dependency.org.apache.httpcomponents.client5>
+		<!-- 5.5.2+ requires import of jdk.net.Sockets package -->
+		<dependency.org.apache.httpcomponents.client5>5.5.1</dependency.org.apache.httpcomponents.client5>
 		<dependency.org.apache.httpcomponents.core4>4.4.16</dependency.org.apache.httpcomponents.core4>
-		<dependency.org.apache.httpcomponents.core5>5.4.2</dependency.org.apache.httpcomponents.core5>
+		<!-- 5.4.x fails with Extended socket option not supported: TCP_KEEPIDLE -->
+		<dependency.org.apache.httpcomponents.core5>5.3.6</dependency.org.apache.httpcomponents.core5>
 		<dependency.org.apache.karaf>4.4.11</dependency.org.apache.karaf>
 		<dependency.org.apache.logging.log4j>2.25.4</dependency.org.apache.logging.log4j>
 		<dependency.org.apache.servicemix.bundles.aopalliance>1.0_6</dependency.org.apache.servicemix.bundles.aopalliance>
