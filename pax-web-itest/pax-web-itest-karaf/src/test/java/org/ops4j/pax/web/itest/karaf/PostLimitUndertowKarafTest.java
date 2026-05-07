@@ -51,7 +51,9 @@ public class PostLimitUndertowKarafTest extends PostLimitBaseKarafTest {
 
 	@Override
 	protected int getPostSizeExceededHttpResponseCode() {
-		return HttpServletResponse.SC_BAD_REQUEST;
+//		return HttpServletResponse.SC_BAD_REQUEST;
+		// see https://redhat.atlassian.net/browse/UNDERTOW-2761
+		return HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
 	}
 
 }
