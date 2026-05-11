@@ -1203,11 +1203,11 @@ class JettyServerWrapper implements BatchVisitor {
 					Integer maxEntries = configuration.resources().maxCacheEntries();
 					// the defaults in Jetty are quite high (256MB total, 128MB max entry size), but we can have more
 					// resource servlets, so we'll divide the defaults by 64
-					sch.setInitParameter("maxCacheSize",
+					holder.setInitParameter("maxCacheSize",
 							totalCacheSize != null ? Integer.toString(totalCacheSize * 1024) : Integer.toString(256 * 1024 * 1024 / 64));
-					sch.setInitParameter("maxCachedFileSize",
+					holder.setInitParameter("maxCachedFileSize",
 							maxEntrySize != null ? Integer.toString(maxEntrySize * 1024) : Integer.toString(128 * 1024 * 1024 / 64));
-					sch.setInitParameter("maxCachedFiles",
+					holder.setInitParameter("maxCachedFiles",
 							maxEntries != null ? Integer.toString(maxEntries) : "2048");
 				}
 
