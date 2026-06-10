@@ -38,7 +38,7 @@ public class WebSocketIntegrationTest extends AbstractWebSocketIntegrationTest {
 
 	@Override
 	protected String getContainerSpecificWebSocketsBundleSN() {
-		return "io.undertow.websockets-jsr";
+		return "io.undertow.ee.undertow-websockets";
 	}
 
 }

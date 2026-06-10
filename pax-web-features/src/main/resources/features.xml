@@ -292,7 +292,7 @@ jakarta.servlet.context.tempdir = ${karaf.data}/pax-web/tmp
 		<bundle start-level="30">mvn:org.jboss.xnio/xnio-api/${dependency.org.jboss.xnio}</bundle>
 		<bundle start-level="30">mvn:org.jboss.xnio/xnio-nio/${dependency.org.jboss.xnio}</bundle>
 		<bundle start-level="30">mvn:io.undertow/undertow-core/${dependency.io.undertow}</bundle>
-		<bundle start-level="30">mvn:io.undertow/undertow-servlet/${dependency.io.undertow}</bundle>
+		<bundle start-level="30">mvn:io.undertow.ee/undertow-servlet/${dependency.io.undertow.ee}</bundle>
 		<bundle start-level="30">mvn:org.ops4j.pax.web/pax-web-undertow/${project.version}</bundle>
 	</feature>
 
@@ -300,7 +300,7 @@ jakarta.servlet.context.tempdir = ${karaf.data}/pax-web/tmp
 		<feature>pax-web-websockets</feature>
 		<feature>pax-web-undertow</feature>
 
-		<bundle start-level="30">mvn:io.undertow/undertow-websockets-jsr/${dependency.io.undertow}</bundle>
+		<bundle start-level="30">mvn:io.undertow.ee/undertow-websockets/${dependency.io.undertow.ee}</bundle>
 		<bundle start-level="30">mvn:org.ops4j.pax.web/pax-web-undertow-websocket/${project.version}</bundle>
 	</feature>
 

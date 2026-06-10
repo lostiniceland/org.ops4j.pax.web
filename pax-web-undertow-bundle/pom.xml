@@ -136,6 +136,8 @@
 							org.graalvm.word;resolution:=optional
 						</Import-Package>
 						<Export-Package>
+							io.undertow.servlet.*;version="${dependency.io.undertow.ee}",
+							io.undertow.websockets.jsr.*;version="${dependency.io.undertow.ee}",
 							io.undertow.*;version="${dependency.io.undertow}",
 							org.xnio.*;version="${dependency.org.jboss.xnio}",
 
@@ -206,12 +208,12 @@
 			<artifactId>undertow-core</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>io.undertow</groupId>
+			<groupId>io.undertow.ee</groupId>
 			<artifactId>undertow-servlet</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>io.undertow</groupId>
-			<artifactId>undertow-websockets-jsr</artifactId>
+			<groupId>io.undertow.ee</groupId>
+			<artifactId>undertow-websockets</artifactId>
 		</dependency>
 
 		<dependency>

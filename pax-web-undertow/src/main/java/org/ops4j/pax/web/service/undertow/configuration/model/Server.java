@@ -660,7 +660,7 @@ public class Server {
 		 * Undertow: io.undertow.UndertowOptions#HTTP2_SETTINGS_INITIAL_WINDOW_SIZE, defaults to
 		 * io.undertow.protocols.http2.Http2Channel#DEFAULT_INITIAL_WINDOW_SIZE
 		 */
-		private int http2InitialWindowSize = Http2Channel.DEFAULT_INITIAL_WINDOW_SIZE;
+		private int http2InitialWindowSize = UndertowOptions.DEFAULT_HTTP2_SETTINGS_INITIAL_WINDOW_SIZE;
 
 		/**
 		 * Undertow: io.undertow.UndertowOptions#HTTP2_SETTINGS_MAX_CONCURRENT_STREAMS
@@ -727,7 +727,7 @@ public class Server {
 			listener.enableHttp2 = ParserUtils.toBoolean(attributes.get(ATT_ENABLE_HTTP2), locator, false);
 			listener.http2EnablePush = ParserUtils.toBoolean(attributes.get(ATT_HTTP2_ENABLE_PUSH), locator, false);
 			listener.http2HeaderTableSize = ParserUtils.toInteger(attributes.get(ATT_HTTP2_HEADER_TABLE_SIZE), locator, io.undertow.UndertowOptions.HTTP2_SETTINGS_HEADER_TABLE_SIZE_DEFAULT);
-			listener.http2InitialWindowSize = ParserUtils.toInteger(attributes.get(ATT_HTTP2_INITIAL_WINDOW_SIZE), locator, Http2Channel.DEFAULT_INITIAL_WINDOW_SIZE);
+			listener.http2InitialWindowSize = ParserUtils.toInteger(attributes.get(ATT_HTTP2_INITIAL_WINDOW_SIZE), locator, UndertowOptions.DEFAULT_HTTP2_SETTINGS_INITIAL_WINDOW_SIZE);
 			listener.http2MaxConcurrentStreams = ParserUtils.toInteger(attributes.get(ATT_HTTP2_MAX_CONCURRENT_STREAMS), locator, -1);
 			listener.http2MaxFrameSize = ParserUtils.toInteger(attributes.get(ATT_HTTP2_MAX_FRAME_SIZE), locator, Http2Channel.DEFAULT_MAX_FRAME_SIZE);
 			listener.http2MaxHeaderListSize = ParserUtils.toInteger(attributes.get(ATT_HTTP2_MAX_HEADER_LIST_SIZE), locator, UndertowOptions.DEFAULT_MAX_HEADER_SIZE);
@@ -947,7 +947,7 @@ public class Server {
 		 * Undertow: io.undertow.UndertowOptions#HTTP2_SETTINGS_INITIAL_WINDOW_SIZE, defaults to
 		 * io.undertow.protocols.http2.Http2Channel#DEFAULT_INITIAL_WINDOW_SIZE
 		 */
-		private int http2InitialWindowSize = Http2Channel.DEFAULT_INITIAL_WINDOW_SIZE;
+		private int http2InitialWindowSize = UndertowOptions.DEFAULT_HTTP2_SETTINGS_INITIAL_WINDOW_SIZE;
 
 		/**
 		 * Undertow: io.undertow.UndertowOptions#HTTP2_SETTINGS_MAX_CONCURRENT_STREAMS
@@ -1030,7 +1030,7 @@ public class Server {
 			listener.sslSessionTimeout = ParserUtils.toInteger(attributes.get(ATT_SSL_SESSION_TIMEOUT), locator, 0);
 			listener.http2EnablePush = ParserUtils.toBoolean(attributes.get(ATT_HTTP2_ENABLE_PUSH), locator, false);
 			listener.http2HeaderTableSize = ParserUtils.toInteger(attributes.get(ATT_HTTP2_HEADER_TABLE_SIZE), locator, io.undertow.UndertowOptions.HTTP2_SETTINGS_HEADER_TABLE_SIZE_DEFAULT);
-			listener.http2InitialWindowSize = ParserUtils.toInteger(attributes.get(ATT_HTTP2_INITIAL_WINDOW_SIZE), locator, Http2Channel.DEFAULT_INITIAL_WINDOW_SIZE);
+			listener.http2InitialWindowSize = ParserUtils.toInteger(attributes.get(ATT_HTTP2_INITIAL_WINDOW_SIZE), locator, UndertowOptions.DEFAULT_HTTP2_SETTINGS_INITIAL_WINDOW_SIZE);
 			listener.http2MaxConcurrentStreams = ParserUtils.toInteger(attributes.get(ATT_HTTP2_MAX_CONCURRENT_STREAMS), locator, -1);
 			listener.http2MaxFrameSize = ParserUtils.toInteger(attributes.get(ATT_HTTP2_MAX_FRAME_SIZE), locator, Http2Channel.DEFAULT_MAX_FRAME_SIZE);
 			listener.http2MaxHeaderListSize = ParserUtils.toInteger(attributes.get(ATT_HTTP2_MAX_HEADER_LIST_SIZE), locator, UndertowOptions.DEFAULT_MAX_HEADER_SIZE);

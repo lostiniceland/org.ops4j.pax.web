@@ -16,6 +16,7 @@
 package org.ops4j.pax.web.service.undertow.internal.security;
 
 import io.undertow.security.api.AuthenticationMechanism;
+import io.undertow.security.api.AuthenticationMechanismContext;
 import io.undertow.security.idm.Account;
 import io.undertow.security.idm.IdentityManager;
 import io.undertow.security.impl.AbstractSecurityContext;
@@ -26,7 +27,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-public class OsgiSecurityContext extends AbstractSecurityContext {
+public class OsgiSecurityContext extends AbstractSecurityContext implements AuthenticationMechanismContext {
 
 	private final Account principal;
 	private final String authMechanism;

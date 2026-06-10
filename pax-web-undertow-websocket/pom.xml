@@ -110,8 +110,8 @@
 			<artifactId>undertow-core</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>io.undertow</groupId>
-			<artifactId>undertow-websockets-jsr</artifactId>
+			<groupId>io.undertow.ee</groupId>
+			<artifactId>undertow-websockets</artifactId>
 		</dependency>
 
 		<dependency>

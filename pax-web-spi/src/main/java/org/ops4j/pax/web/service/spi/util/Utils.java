@@ -573,7 +573,7 @@ public class Utils {
 		for (Bundle b : ctx.getBundles()) {
 			// undertow-websockets-jsr provides necessary
 			// /META-INF/services/jakarta.websocket.server.ServerEndpointConfig$Configurator
-			if ("io.undertow.websockets-jsr".equals(b.getSymbolicName())) {
+			if ("io.undertow.ee.undertow-websockets".equals(b.getSymbolicName())) {
 				return b;
 			}
 		}

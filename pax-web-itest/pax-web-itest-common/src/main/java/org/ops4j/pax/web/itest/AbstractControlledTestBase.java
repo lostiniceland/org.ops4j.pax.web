@@ -441,7 +441,7 @@ public abstract class AbstractControlledTestBase {
 						.versionAsInProject().startLevel(START_LEVEL_TEST_BUNDLE - 1),
 				mavenBundle("io.undertow", "undertow-core")
 						.versionAsInProject().startLevel(START_LEVEL_TEST_BUNDLE - 1),
-				mavenBundle("io.undertow", "undertow-servlet")
+				mavenBundle("io.undertow.ee", "undertow-servlet")
 						.versionAsInProject().startLevel(START_LEVEL_TEST_BUNDLE - 1),
 				mavenBundle("org.ops4j.pax.web", "pax-web-undertow")
 						.versionAsInProject().startLevel(START_LEVEL_TEST_BUNDLE - 1)
@@ -454,7 +454,7 @@ public abstract class AbstractControlledTestBase {
 						.versionAsInProject().startLevel(START_LEVEL_TEST_BUNDLE - 1),
 				mavenBundle("jakarta.websocket", "jakarta.websocket-client-api")
 						.versionAsInProject().startLevel(START_LEVEL_TEST_BUNDLE - 1),
-				mavenBundle("io.undertow", "undertow-websockets-jsr")
+				mavenBundle("io.undertow.ee", "undertow-websockets")
 						.versionAsInProject().startLevel(START_LEVEL_TEST_BUNDLE - 1),
 				mavenBundle("org.ops4j.pax.web", "pax-web-undertow-websocket")
 						.versionAsInProject().startLevel(START_LEVEL_TEST_BUNDLE - 1),
